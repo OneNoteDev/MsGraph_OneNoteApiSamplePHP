@@ -1,20 +1,20 @@
 <?php
 //*********************************************************
 // Copyright (c) Microsoft Corporation
-// All rights reserved. 
+// All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the ""License""); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// http://www.apache.org/licenses/LICENSE-2.0 
+// Licensed under the Apache License, Version 2.0 (the ""License"");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
 //
-// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT 
-// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS 
-// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED 
-// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR 
-// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT. 
+// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS
+// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR
+// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
 //
-// See the Apache Version 2.0 License for specific language 
+// See the Apache Version 2.0 License for specific language
 // governing permissions and limitations under the License.
 //*********************************************************
 define('AUTHCOOKIE', 'wl_auth');
@@ -28,13 +28,13 @@ define('EXPIRESIN', 'expires_in');
 define('REFRESHTOKEN', 'refresh_token');
 
 // Update the following values
-define('CLIENTID', '%CLIENT_ID%');
-define('CLIENTSECRET', '%CLIENT_SECRET%');
+define('CLIENTID', '66f9234f-0041-48e7-9e98-575e3de2c745');
+define('CLIENTSECRET', 'acdXmo2TkE1hcd2aEjTvbxO');
 
 // Make sure this is identical to the redirect_uri parameter passed in WL.init() call.
-define('CALLBACK', '%REDIRECT_URI_PATH%/callback.php');
+define('CALLBACK', 'http://onenoteapisamples.com/callback.php');
 
-define('OAUTHURL', 'https://login.live.com/oauth20_token.srf');  
+define('OAUTHURL', 'https://login.live.com/oauth20_token.srf');
 
 function buildQueryString($array)
 {

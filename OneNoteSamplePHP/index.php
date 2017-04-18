@@ -1,28 +1,28 @@
 <?php
 //*********************************************************
 // Copyright (c) Microsoft Corporation
-// All rights reserved. 
+// All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the ""License""); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// http://www.apache.org/licenses/LICENSE-2.0 
+// Licensed under the Apache License, Version 2.0 (the ""License"");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
 //
-// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT 
-// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS 
-// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED 
-// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR 
-// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT. 
+// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS
+// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR
+// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
 //
-// See the Apache Version 2.0 License for specific language 
+// See the Apache Version 2.0 License for specific language
 // governing permissions and limitations under the License.
 //*********************************************************
 session_start();
-if (!isset($_SESSION['csrf_token'])) 
+if (!isset($_SESSION['csrf_token']))
 {
     $_SESSION['csrf_token'] = hash('sha256',rand());
 }
-//disallow other sites from embedding this page 
+//disallow other sites from embedding this page
 header("X-Frame-Options: SAMEORIGIN");
 ?>
 
@@ -31,7 +31,7 @@ header("X-Frame-Options: SAMEORIGIN");
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    
+
     <!-- *************************************************** -->
     <!--This page's OAuth implementation is based on https://github.com/liveservices/LiveSDK/tree/master/Samples/PHP/OauthSample -->
     <!--Please see that page for documentation -->
@@ -87,15 +87,15 @@ button {
 <script type="text/javascript">
 
     // Update the following values
-    var client_id = "%CLIENT_ID%",
+    var client_id = "66f9234f-0041-48e7-9e98-575e3de2c745",
         scope = ["wl.signin", "wl.basic", "wl.offline_access", "office.onenote_create"],
-        redirect_uri = "%REDIRECT_URI_PATH%/callback.php";
+        redirect_uri = "http://onenoteapisamples.com/callback.php";
 
-    function id(domId) { 
+    function id(domId) {
         return document.getElementById(domId);
     }
 
-    function displayMe() {  
+    function displayMe() {
         var imgHolder = id("meImg"),
             nameHolder = id("meName");
 
@@ -130,7 +130,7 @@ button {
             }
             else {
                 clearMe();
-            }            
+            }
         }
     );
 
