@@ -1,30 +1,30 @@
 <?php
 //*********************************************************
 // Copyright (c) Microsoft Corporation
-// All rights reserved. 
+// All rights reserved.
 //
-// Licensed under the Apache License, Version 2.0 (the ""License""); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// http://www.apache.org/licenses/LICENSE-2.0 
+// Licensed under the Apache License, Version 2.0 (the ""License"");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
 //
-// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT 
-// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS 
-// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED 
-// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR 
-// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT. 
+// THIS CODE IS PROVIDED ON AN  *AS IS* BASIS, WITHOUT
+// WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS
+// OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+// WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR
+// PURPOSE, MERCHANTABLITY OR NON-INFRINGEMENT.
 //
-// See the Apache Version 2.0 License for specific language 
+// See the Apache Version 2.0 License for specific language
 // governing permissions and limitations under the License.
 //*********************************************************
 error_reporting(E_ALL);
 session_start();
 
-//disallow other sites from embedding this page 
+//disallow other sites from embedding this page
 header("X-Frame-Options: SAMEORIGIN");
 
 //HTTPS endpoint to create pages with POST
-define('URL','https://www.onenote.com/api/v1.0/pages');
+define('URL','https://graph.microsoft.com/beta/me/notes/pages');
 
 function parseQueryString($query)
 {
@@ -43,31 +43,31 @@ function parseQueryString($query)
 
 class OneNoteRequest
 {
-    
+
     //the boundary between multipart request parts
     private $boundary;
-	
+
     //constructor
     function OneNoteRequest()
     {
         //generate a random string to serve as the multipart boundary
         $this->boundary = hash('sha256',rand());
     }
-    
+
     function getPages()
     {
         $ch = $this->initCurlGet();
-        $response = curl_exec($ch);       
+        $response = curl_exec($ch);
         $this->finish($ch,$response);
     }
-    
+
     function createPageWithSimpleText()
     {
         $ch = $this->initCurl('simple');
-        
+
         //ISO 8601 standard time stamp
         $date = date('c');
-        
+
         //Just the POST data -- multipart not required for simple pages
         $postdata = <<<POSTDATA
 <!DOCTYPE html>
@@ -84,23 +84,23 @@ class OneNoteRequest
 POSTDATA;
 
         curl_setopt($ch,CURLOPT_POSTFIELDS,$postdata);
-        $response = curl_exec($ch);       
+        $response = curl_exec($ch);
         $this->finish($ch,$response);
     }
-    
+
     function createPageWithFile()
     {
-        
+
         $ch = $this->initCurl();
-        
+
         //ISO 8601 standard time stamp
         $date = date('c');
-        
+
         //Read the file into memory
-        //Note that reading entire large files into memory could create problems if 
+        //Note that reading entire large files into memory could create problems if
         //  PHP doesn't have enough memory to work with
         $fileContents = file_get_contents("attachment.pdf");
-        
+
         //Includes the  Presentation part and embedded file data part
         //Each has its own Content-Disposition and Content-Type headers
         //The request must end with a blank line to be a valid Multipart request
@@ -117,9 +117,9 @@ Content-Type: text/html
   </head>
   <body>
   <h1>This is a page with a PDF file attachment</h1>
-    <object 
-        data-attachment="attachment.pdf" 
-        data="name:embeddedFile" 
+    <object
+        data-attachment="attachment.pdf"
+        data="name:embeddedFile"
         type="application/pdf" />
 	<p>Here's the content of the PDF document :</p>
 	<img data-render-src="name:embeddedFile" alt="Hello World" width="1500" />
@@ -133,20 +133,20 @@ $fileContents
 --{$this->boundary}--
 
 POSTDATA;
-        
+
         curl_setopt($ch,CURLOPT_POSTFIELDS,$postdata);
         $response = curl_exec($ch);
         $this->finish($ch,$response);
     }
-    
+
     function createPageWithTextandImage()
-    {        
+    {
         $imageData = file_get_contents("Logo.jpg");
         $ch = $this->initCurl();
-        
+
         //ISO 8601 standard time stamp
         $date = date('c');
-        
+
         //Includes just the single Presentation part
         //It has its own Content-Disposition and Content-Type headers
         //The request must end with a blank line to be a valid Multipart request
@@ -174,19 +174,19 @@ $imageData
 --{$this->boundary}--
 
 POSTDATA;
-   
+
         curl_setopt($ch,CURLOPT_POSTFIELDS,$postdata);
         $response = curl_exec($ch);
         $this->finish($ch,$response);
     }
-    
+
     function createPageWithScreenshotFromUrl()
     {
         $ch = $this->initCurl('simple');
-        
+
         //ISO 8601 standard time stamp
         $date = date('c');
-        
+
         //Just the POST data -- multipart not required for simple pages
         $postdata = <<<POSTDATA
 <!DOCTYPE html>
@@ -202,12 +202,12 @@ POSTDATA;
 </html>
 
 POSTDATA;
-        
+
         curl_setopt($ch,CURLOPT_POSTFIELDS,$postdata);
         $response = curl_exec($ch);
         $this->finish($ch,$response);
     }
-    
+
     function createPageWithScreenshotFromHtml()
     {
         $html = "<html>" .
@@ -222,12 +222,12 @@ POSTDATA;
                 "viverra auctor nisi ac egestas. Quisque ac neque nec velit fringilla sagittis porttitor sit amet quam.</p>" .
                 "</body>" .
                 "</html>";
-        
+
         $ch = $this->initCurl();
-        
+
         //ISO 8601 standard time stamp
         $date = date('c');
-       
+
         //Includes each part of the multipart request
         //Each part has its own Content-Disposition and Content-Type headers
         //The request must end with a blank line to be a valid Multipart request
@@ -257,12 +257,12 @@ $html
 
 POSTDATA;
         curl_setopt($ch,CURLOPT_POSTFIELDS,$postdata);
-        
+
         $response = curl_exec($ch);
-              
+
         $this->finish($ch,$response);
     }
-    
+
     function getPagesEndpointUrlWithSectionName()
     {
 		$sectionName = $_POST['section'];
@@ -282,7 +282,7 @@ POSTDATA;
         $cookieValues = parseQueryString(@$_COOKIE['wl_auth']);
         //Since cookies are user-supplied content, it must be encoded to avoid header injection
         $encodedAccessToken = rawurlencode(@$cookieValues['access_token']);
-	    $initUrl = $this->getPagesEndpointUrlWithSectionName();	
+	    $initUrl = $this->getPagesEndpointUrlWithSectionName();
         $ch = curl_init($initUrl);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         if ($type == 'multipart') {
@@ -293,10 +293,10 @@ POSTDATA;
             curl_setopt($ch,CURLOPT_HTTPHEADER,array("Content-Type:text/html\r\n".
                                                         "Authorization: Bearer ".$encodedAccessToken));
         }
-        
+
         //configures curl_exec() to return the response as a string rather than echoing it
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        
+
         //use HTTP POST method
         curl_setopt($ch,CURLOPT_POST,true);
         return $ch;
@@ -313,14 +313,14 @@ POSTDATA;
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
         return $ch;
     }
-    
+
     function finish($ch,$response)
     {
-        
+
         $info = curl_getinfo($ch);
         curl_close($ch);
-        
-        if ($info['http_code'] == 201) 
+
+        if ($info['http_code'] == 201)
         {
             echo '<h2>Page created!</h2>';
             $response_without_header = substr($response,$info['header_size']);
@@ -339,12 +339,12 @@ POSTDATA;
         {
             echo '<h2>Authorization failed. Try signing out and signing in again.</h2>';
         }
-        else 
+        else
         {
             echo '<h2>Something went wrong...' . $info['http_code'] . '</h2>';
         }
         echo '</b></h2>';
-        
+
         echo '<h3>Response</h3>';
         echo '<pre>';
         echo htmlspecialchars($response);
@@ -372,13 +372,13 @@ if (isset($_POST['submit'])) //form submission?
         	case "getPages":
 	        	$OneNoteRequest->getPages();
 	        	break;
-            case "text": 
-                $OneNoteRequest->createPageWithSimpleText(); 
+            case "text":
+                $OneNoteRequest->createPageWithSimpleText();
                 break;
-            case "file": 
-                $OneNoteRequest->createPageWithFile(); 
+            case "file":
+                $OneNoteRequest->createPageWithFile();
                 break;
-            case "textimage": 
+            case "textimage":
                 $OneNoteRequest->createPageWithTextAndImage();
                 break;
             case "url":

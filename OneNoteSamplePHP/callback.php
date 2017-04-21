@@ -32,9 +32,9 @@ define('CLIENTID', '66f9234f-0041-48e7-9e98-575e3de2c745');
 define('CLIENTSECRET', 'acdXmo2TkE1hcd2aEjTvbxO');
 
 // Make sure this is identical to the redirect_uri parameter passed in WL.init() call.
-define('CALLBACK', 'http://onenoteapisamples.com/callback.php');
+define('CALLBACK', 'http://localhost:8888/callback.php');
 
-define('OAUTHURL', 'https://login.live.com/oauth20_token.srf');
+define('OAUTHURL', 'https://login.microsoftonline.com/common/oauth2/v2.0/token');
 
 function buildQueryString($array)
 {
