@@ -21,7 +21,7 @@ define('AUTHCOOKIE', 'wl_auth');
 define('ERRORCODE', 'error');
 define('ERRORDESC', 'error_description');
 define('ACCESSTOKEN', 'access_token');
-define('AUTHENTICATION_TOKEN', 'authentication_token');
+define('ID_TOKEN', 'id_token');
 define('CODE', 'code');
 define('SCOPE', 'scope');
 define('EXPIRESIN', 'expires_in');
@@ -30,6 +30,7 @@ define('REFRESHTOKEN', 'refresh_token');
 // Update the following values
 define('CLIENTID', '66f9234f-0041-48e7-9e98-575e3de2c745');
 define('CLIENTSECRET', 'acdXmo2TkE1hcd2aEjTvbxO');
+define('SCOPES', 'openid Notes.ReadWrite offline_access');
 
 // Make sure this is identical to the redirect_uri parameter passed in WL.init() call.
 define('CALLBACK', 'http://localhost:8888/callback.php');
@@ -90,6 +91,10 @@ function requestAccessToken($content)
         'POST',
         $content);
 
+
+        ini_set("error_log", "./errors/errorlog.log");
+        error_log(print_r($response,true));
+
     if ($response !== false)
     {
         $authToken = json_decode($response);
@@ -110,7 +115,7 @@ function requestAccessTokenByVerifier($verifier)
                                    'client_secret' => CLIENTSECRET,
                                    'code' => $verifier,
                                    'grant_type' => 'authorization_code',
-                                   'scope' => oAuthData.scopes.join(' ')
+                                   'scope' => SCOPES
                               ));
 }
 
@@ -199,8 +204,8 @@ function handleTokenResponse($token, $error = null)
     if (!empty($token))
     {
         $cookieValues[ACCESSTOKEN] = $token->{ACCESSTOKEN};
-        $cookieValues[AUTHENTICATION_TOKEN] = $token->{AUTHENTICATION_TOKEN};
-        $cookieValues[SCOPE] = $token->{SCOPE};
+        $cookieValues[ID_TOKEN] = $token->{ID_TOKEN};
+        $cookieValues[SCOPES] = $token->{SCOPE};
         $cookieValues[EXPIRESIN] = $token->{EXPIRESIN};
 
         if (!empty($token->{ REFRESHTOKEN }))
@@ -215,13 +220,10 @@ function handleTokenResponse($token, $error = null)
         $cookieValues[ERRORDESC] = $error[ERRORDESC];
     }
 
-    setrawcookie(AUTHCOOKIE, buildQueryString($cookieValues), 0, '/', $_SERVER[SERVER_NAME]);
+    setrawcookie(AUTHCOOKIE, buildQueryString($cookieValues), 0, '/', $_SERVER['SERVER_NAME']);
 }
 
-window.document.onload = function(e) {
-  handlePageRequest();
-}
-
+handlePageRequest();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -230,7 +232,12 @@ window.document.onload = function(e) {
       xmlns:msgr="http://messenger.live.com/2009/ui-tags">
 <head>
     <title>Live SDK Callback Page</title>
-    <script src="./lib/app-config.js" type="text/javascript"></script>
+    <script>
+    window.onload = function(e) {
+      console.log('hi');
+      // set cookies
+    }
+    </script>
 </head>
 <body>
 </body>
