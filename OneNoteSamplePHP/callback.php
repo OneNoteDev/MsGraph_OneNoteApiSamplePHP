@@ -41,14 +41,9 @@ function buildQueryString($array)
     $result = '';
     foreach ($array as $k => $v)
     {
-        if ($result == '')
-        {
-            $prefix = '';
-        }
-        else
-        {
-            $prefix = '&';
-        }
+        if ($result == '') $prefix = '';
+        else $prefix = '&';
+
         $result .= $prefix . rawurlencode($k) . '=' . rawurlencode($v);
     }
 
@@ -114,7 +109,8 @@ function requestAccessTokenByVerifier($verifier)
                                    'redirect_uri' => CALLBACK,
                                    'client_secret' => CLIENTSECRET,
                                    'code' => $verifier,
-                                   'grant_type' => 'authorization_code'
+                                   'grant_type' => 'authorization_code',
+                                   'scope' => oAuthData.scopes.join(' ')
                               ));
 }
 
@@ -222,7 +218,9 @@ function handleTokenResponse($token, $error = null)
     setrawcookie(AUTHCOOKIE, buildQueryString($cookieValues), 0, '/', $_SERVER[SERVER_NAME]);
 }
 
-handlePageRequest();
+window.document.onload = function(e) {
+  handlePageRequest();
+}
 
 
 ?>
@@ -232,7 +230,7 @@ handlePageRequest();
       xmlns:msgr="http://messenger.live.com/2009/ui-tags">
 <head>
     <title>Live SDK Callback Page</title>
-    <script src="//js.live.net/v5.0/wl.js" type="text/javascript"></script>
+    <script src="./lib/app-config.js" type="text/javascript"></script>
 </head>
 <body>
 </body>

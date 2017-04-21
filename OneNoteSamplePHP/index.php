@@ -65,7 +65,7 @@ button {
 <div>
     <div id="meName" class="Name"></div>
     <div id="meImg"></div>
-    <div id="signin"></div>
+    <button id="signin" onclick="login();">Sign In</button>
     <div id="OneNoteForm">
         <form method="POST" action="submit.php">
             <br />
@@ -84,6 +84,6 @@ button {
     </div>
 </div>
 <script src="../dependencies/graph-js-sdk-web.js" type="text/javascript"></script>
-<script src="./app-config.js" type="text/javascript"></script>
+<script src="./lib/app-config.js" type="text/javascript"></script>
 </body>
 </html>
