@@ -20,45 +20,46 @@
 session_start();
 if (!isset($_SESSION['csrf_token']))
 {
-    $_SESSION['csrf_token'] = hash('sha256',rand());
+  $_SESSION['csrf_token'] = hash('sha256',rand());
 }
 //disallow other sites from embedding this page
 header("X-Frame-Options: SAMEORIGIN");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-  <head>
-    <title>OneNote Service PHP Sample</title>
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-  </head>
+<head>
+  <title>OneNote Service PHP Sample</title>
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
 
-  <body>
-    <h1>OneNote Service PHP Sample</h1>
+<body>
+  <h1>OneNote Service PHP Sample</h1>
 
-    <div>
-      <div id="meName" class="Name"></div>
-      <div id="meImg"></div>
-      <button id="signin" onclick="login();">Sign In</button>
-      <div id="OneNoteForm">
-          <form method="POST" action="submit.php">
-              <br />
-              <input type="hidden" name="csrf_token" value="<?php /* Print the automatically generated session ID for CSRF protection */ echo htmlspecialchars($_SESSION['csrf_token']); ?>" />
-  	        <p>Enter Section Name:</p>
-  	        <input type="text" name="section" />
-  	        <br/>
-              <button type="submit" name="submit" value="text">Create OneNote Page with Text</button> <br />
-              <button type="submit" name="submit" value="textimage">Create OneNote Page with Text and Images</button><br />
-              <button type="submit" name="submit" value="html">Create OneNote Page with a Screenshot of HTML</button><br />
-              <button type="submit" name="submit" value="url">Create OneNote Page with a Screenshot of a URL</button><br />
-              <button type="submit" name="submit" value="file">Create OneNote Page with an Attached and Rendered PDF File</button><br />
-              <button type="submit" name="submit" value="getPages">Get Pages (ignores section name, paginated)</button><br />
-          </form>
+  <div>
+    <div id="meName" class="Name"></div>
+    <div id="meImg"></div>
+    <button id="signin" onclick="login();">Sign In</button>
+    <div id="OneNoteForm">
+      <form method="POST" action="submit.php">
+        <br />
+        <input type="hidden" name="csrf_token" value="<?php /* Print the automatically generated session ID for CSRF protection */ echo htmlspecialchars($_SESSION['csrf_token']); ?>" />
+        <p>Enter Section Name:</p>
+        <input type="text" name="section" />
+        <br/>
+        <br/>
+        <button type="submit" name="submit" value="text">Create OneNote Page with Text</button> <br />
+        <button type="submit" name="submit" value="textimage">Create OneNote Page with Text and Images</button><br />
+        <button type="submit" name="submit" value="html">Create OneNote Page with a Screenshot of HTML</button><br />
+        <button type="submit" name="submit" value="url">Create OneNote Page with a Screenshot of a URL</button><br />
+        <button type="submit" name="submit" value="file">Create OneNote Page with an Attached and Rendered PDF File</button><br />
+        <button type="submit" name="submit" value="getPages">Get Pages (ignores section name, paginated)</button><br />
+      </form>
 
-      </div>
     </div>
-    <script src="./lib/app-config.js" type="text/javascript"></script>
-  </body>
+  </div>
+  <script src="./lib/app-config.js" type="text/javascript"></script>
+</body>
 </html>
