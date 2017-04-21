@@ -17,7 +17,7 @@
 // See the Apache Version 2.0 License for specific language
 // governing permissions and limitations under the License.
 //*********************************************************
-define('AUTHCOOKIE', 'wl_auth');
+define('AUTHCOOKIE', 'graph_auth');
 define('ERRORCODE', 'error');
 define('ERRORDESC', 'error_description');
 define('ACCESSTOKEN', 'access_token');
@@ -231,11 +231,10 @@ handlePageRequest();
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:msgr="http://messenger.live.com/2009/ui-tags">
 <head>
-    <title>Live SDK Callback Page</title>
+    <title>Microsoft Graph OneNote Sample Callback Page</title>
     <script>
     window.onload = function(e) {
-      console.log('hi');
-      // set cookies
+      window.close();
     }
     </script>
 </head>

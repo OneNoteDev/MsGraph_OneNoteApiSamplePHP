@@ -279,7 +279,7 @@ POSTDATA;
 
     function initCurl($type = 'multipart')
     {
-        $cookieValues = parseQueryString(@$_COOKIE['wl_auth']);
+        $cookieValues = parseQueryString(@$_COOKIE['graph_auth']);
         //Since cookies are user-supplied content, it must be encoded to avoid header injection
         $encodedAccessToken = rawurlencode(@$cookieValues['access_token']);
 	    $initUrl = $this->getPagesEndpointUrlWithSectionName();
@@ -304,7 +304,7 @@ POSTDATA;
 
     function initCurlGet()
     {
-        $cookieValues = parseQueryString(@$_COOKIE['wl_auth']);
+        $cookieValues = parseQueryString(@$_COOKIE['graph_auth']);
         //Since cookies are user-supplied content, it must be encoded to avoid header injection
         $encodedAccessToken = rawurlencode(@$cookieValues['access_token']);
     	$ch = curl_init(URL);
@@ -364,7 +364,7 @@ if (isset($_POST['submit'])) //form submission?
     {
         echo "Error: Your session timed out. Please go back and try again. (Cross-site request forgery protection check failed.)";
     }
-    elseif (empty($_COOKIE['wl_auth'])) {
+    elseif (empty($_COOKIE['graph_auth'])) {
         echo "Error: Not signed in.";
     }
     else {
