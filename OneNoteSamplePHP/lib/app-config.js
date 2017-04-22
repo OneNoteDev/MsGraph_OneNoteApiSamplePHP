@@ -2,7 +2,7 @@
 var oAuthData = {
   clientId: '66f9234f-0041-48e7-9e98-575e3de2c745',
   redirectUri: 'http://localhost:8888/callback.php',
-  scopes: ['openid', 'Notes.ReadWrite', 'offline_access', 'User.ReadBasic.All'],
+  scopes: ['openid', 'Notes.ReadWrite', 'offline_access', 'User.Read'],
 };
 
 function id(domId) {
@@ -79,6 +79,7 @@ function initiateXMLHttpRequest(resource, cb) {
 function getUserProfilePicture() {
   initiateXMLHttpRequest('photo', function(xhr) {
     var imgHolder = id('meImg');
+    console.log(xhr,'xhr');
     imgHolder.innerHTML = `<img src="${xhr.responseText}" />`;
   });
 }
@@ -102,12 +103,7 @@ function clearMe() {
 }
 
 document.addEventListener('authStateChanged', function(e) {
-  console.log('authStateChanged from event listener!');
   var sessionState = findSessionState();
-  if (sessionState == 'Authorized') {
-    displayMe();
-  }
-  else {
-    clearMe();
-  }
+  if (sessionState == 'Authorized') displayMe();
+  else clearMe();
 });
