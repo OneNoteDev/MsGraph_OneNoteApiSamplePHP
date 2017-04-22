@@ -1,4 +1,4 @@
-// Update the clientId and redirectUri for your application
+// Update the clientId, redirectUri, and scopes for your application
 var oAuthData = {
   clientId: '66f9234f-0041-48e7-9e98-575e3de2c745',
   redirectUri: 'http://localhost:8888/callback.php',
