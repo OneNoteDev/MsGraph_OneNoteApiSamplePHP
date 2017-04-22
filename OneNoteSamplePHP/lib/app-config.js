@@ -2,12 +2,8 @@
 var oAuthData = {
   clientId: '66f9234f-0041-48e7-9e98-575e3de2c745',
   redirectUri: 'http://localhost:8888/callback.php',
-  scopes: ['openid', 'Notes.ReadWrite', 'offline_access'],
-  grantTokenUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
-  authUrl: 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
+  scopes: ['openid', 'Notes.ReadWrite', 'offline_access', 'User.ReadBasic.All'],
 };
-
-var baseRequestUrl = 'https://www.graph.microsoft.com/beta/me/notes';
 
 function id(domId) {
   return document.getElementById(domId);
@@ -41,28 +37,63 @@ function popupCenter(url, title, w, h) {
   }
 }
 
-function displayMe() {
-  console.log(document.cookie);
-  var imgHolder = id('meImg'),
-  nameHolder = id('meName');
-
-  if (imgHolder.innerHTML != '') return;
-
-  if (WL.getSession() != null) {
-    WL.api({ path: 'me/picture', method: 'get' }).then(
-      function (response) {
-        if (response.location) {
-          imgHolder.innerHTML = '<img src="" + response.location + "" />';
-        }
-      }
-    );
-
-    WL.api({ path: 'me', method: 'get' }).then(
-      function (response) {
-        nameHolder.innerHTML = response.name;
-      }
-    );
+function findCookie(cookieName, cookieProperty) {
+  var cookies = document.cookie.split('; ');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    if (cookie.startsWith(cookieName)) {
+      var accessToken = cookie.split(`${cookieProperty}=`)[1].split('&')[0];
+      return accessToken;
+    }
   }
+}
+
+function retrieveAccessToken() {
+  return findCookie('graph_auth', 'access_token');
+}
+
+function findSessionState() {
+  var sessionState = findCookie('session_state', 'session_state');
+  return sessionState ? sessionState : 'Unauthorized';
+}
+
+function initiateXMLHttpRequest(resource, cb) {
+  var token = retrieveAccessToken();
+  var xhr = new XMLHttpRequest();
+
+  if (token) {
+    xhr.open('GET', `https://graph.microsoft.com/v1.0/me/${resource}/$value`);
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.send(null);
+  }
+
+  xhr.onreadystatechange = function() {
+    var DONE = 4;
+    var OK = 200;
+    if (xhr.readyState == DONE) {
+      if (xhr.status == OK) cb(xhr);
+    }
+  };
+}
+
+function getUserProfilePicture() {
+  initiateXMLHttpRequest('photo', function(xhr) {
+    var imgHolder = id('meImg');
+    imgHolder.innerHTML = `<img src="${xhr.responseText}" />`;
+  });
+}
+
+function getUserProfileName() {
+  initiateXMLHttpRequest('displayName', function(xhr) {
+    var nameHolder = id('meName');
+    nameHolder.innerHTML = xhr.responseText;
+  });
+}
+
+function displayMe() {
+  if (id('meImg').innerHTML != '') return;
+  getUserProfilePicture();
+  getUserProfileName();
 }
 
 function clearMe() {
@@ -71,13 +102,12 @@ function clearMe() {
 }
 
 document.addEventListener('authStateChanged', function(e) {
-  console.log('auth changed!', e);
-  if (e.session) {
+  console.log('authStateChanged from event listener!');
+  var sessionState = findSessionState();
+  if (sessionState == 'Authorized') {
     displayMe();
   }
   else {
     clearMe();
   }
 });
-
-// WL.init({ client_id: client_id, redirect_uri: redirect_uri, response_type: 'code', scope: scope });

@@ -30,7 +30,7 @@ define('REFRESHTOKEN', 'refresh_token');
 // Update the following values
 define('CLIENTID', '66f9234f-0041-48e7-9e98-575e3de2c745');
 define('CLIENTSECRET', 'acdXmo2TkE1hcd2aEjTvbxO');
-define('SCOPES', 'openid Notes.ReadWrite offline_access');
+define('SCOPES', 'openid Notes.ReadWrite offline_access User.ReadBasic.All');
 
 // Make sure this is identical to the redirect_uri parameter passed in WL.init() call.
 define('CALLBACK', 'http://localhost:8888/callback.php');
@@ -201,23 +201,24 @@ function handleTokenResponse($token, $error = null)
     $authCookie = $_COOKIE[AUTHCOOKIE];
     $cookieValues = parseQueryString($authCookie);
 
-    if (!empty($token))
-    {
+    if (!empty($token)) {
         $cookieValues[ACCESSTOKEN] = $token->{ACCESSTOKEN};
         $cookieValues[ID_TOKEN] = $token->{ID_TOKEN};
         $cookieValues[SCOPES] = $token->{SCOPE};
         $cookieValues[EXPIRESIN] = $token->{EXPIRESIN};
 
-        if (!empty($token->{ REFRESHTOKEN }))
-        {
+        if (!empty($token->{ REFRESHTOKEN })) {
             saveRefreshToken($token->{ REFRESHTOKEN });
         }
+
+        setrawcookie('session_state', 'Authorized', 0, '/', $_SERVER['SERVER_NAME']);
     }
 
-    if (!empty($error))
-    {
+    if (!empty($error)) {
         $cookieValues[ERRORCODE] = $error[ERRORCODE];
         $cookieValues[ERRORDESC] = $error[ERRORDESC];
+
+      setrawcookie('session_state', 'Unauthorized', 0, '/', $_SERVER['SERVER_NAME']);
     }
 
     setrawcookie(AUTHCOOKIE, buildQueryString($cookieValues), 0, '/', $_SERVER['SERVER_NAME']);
@@ -235,6 +236,7 @@ handlePageRequest();
     <script>
     window.onload = function(e) {
       window.close();
+      window.opener.document.dispatchEvent(new Event('authStateChanged'));
     }
     </script>
 </head>

@@ -267,7 +267,7 @@ class OneNoteRequest {
   }
 
   function initCurl($type = 'multipart') {
-    $cookieValues = parseQueryString(@$_COOKIE['wl_auth']);
+    $cookieValues = parseQueryString(@$_COOKIE['graph_auth']);
     //Since cookies are user-supplied content, it must be encoded to avoid header injection
     $encodedAccessToken = rawurlencode(@$cookieValues['access_token']);
     $initUrl = $this->getPagesEndpointUrlWithSectionName();
@@ -291,7 +291,7 @@ class OneNoteRequest {
   }
 
   function initCurlGet() {
-    $cookieValues = parseQueryString(@$_COOKIE['wl_auth']);
+    $cookieValues = parseQueryString(@$_COOKIE['graph_auth']);
     //Since cookies are user-supplied content, it must be encoded to avoid header injection
     $encodedAccessToken = rawurlencode(@$cookieValues['access_token']);
     $ch = curl_init(URL);
@@ -344,7 +344,7 @@ if (isset($_POST['submit'])) //form submission? {
   if (empty($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || $_POST['csrf_token'] != $_SESSION['csrf_token']) {
     echo "Error: Your session timed out. Please go back and try again. (Cross-site request forgery protection check failed.)";
   }
-  elseif (empty($_COOKIE['wl_auth'])) {
+  elseif (empty($_COOKIE['graph_auth'])) {
     echo "Error: Not signed in.";
   }
   else {
