@@ -20,6 +20,7 @@ function authHandler() {
     cookies.forEach(function(c) {
       document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
     });
+    document.dispatchEvent(new Event('authStateChanged'));
   }
   else openAuthWindow(buildUrl(), 'Authorize OneNote PHP Sample', '700', '500');
 }
@@ -110,11 +111,11 @@ function clearMe() {
 document.addEventListener('authStateChanged', function() {
   var sessionState = findSessionState();
   if (sessionState == 'Authorized') {
-    id('auth').value = 'Log Out';
+    id('auth').innerText = 'Log Out';
     displayMe();
   }
   else {
-    id('auth').value = 'Sign In';
+    id('auth').innerText = 'Sign In';
     clearMe();
   }
 });
