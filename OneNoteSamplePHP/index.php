@@ -41,7 +41,7 @@ header("X-Frame-Options: SAMEORIGIN");
   <div>
     <div id="meName" class="Name"></div>
     <div id="meImg"></div>
-    <button id="signin" onclick="login();">Sign In</button>
+    <button id="auth" onclick="authHandler();">Sign In</button>
     <div id="OneNoteForm">
       <form method="POST" action="submit.php">
         <br />

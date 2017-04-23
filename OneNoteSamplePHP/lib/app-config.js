@@ -1,25 +1,31 @@
 // Update the clientId, redirectUri, and scopes for your application
-var oAuthData = {
-  clientId: '66f9234f-0041-48e7-9e98-575e3de2c745',
-  redirectUri: 'http://localhost:8888/callback.php',
-  scopes: ['openid', 'Notes.ReadWrite', 'offline_access', 'User.Read'],
-};
+var baseRequestUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+var clientId = '66f9234f-0041-48e7-9e98-575e3de2c745';
+var redirectUri = 'http://localhost:8888/callback.php';
+var scopes = ['openid', 'Notes.ReadWrite', 'offline_access', 'User.Read'];
 
 function id(domId) {
   return document.getElementById(domId);
 }
 
 function buildUrl() {
-  return `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${oAuthData.clientId}&scope=
-  ${oAuthData.scopes.join(' ')}&response_type=code&redirect_uri=${oAuthData.redirectUri}&response_mode=query`;
+  return `${baseRequestUrl}?client_id=${clientId}&scope=
+  ${scopes.join(' ')}&response_type=code&redirect_uri=${redirectUri}&response_mode=query`;
 }
 
-function login() {
-  popupCenter(buildUrl(), 'Authorize OneNote PHP Sample', '700', '500');
+function authHandler() {
+  var sessionState = findSessionState();
+  if (sessionState == 'Authorized') {
+    var cookies = document.cookie.split(";");
+    cookies.forEach(function(c) {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+  }
+  else openAuthWindow(buildUrl(), 'Authorize OneNote PHP Sample', '700', '500');
 }
 
 // Source: http://www.xtf.dk
-function popupCenter(url, title, w, h) {
+function openAuthWindow(url, title, w, h) {
   // Fixes dual-screen position                         Most browsers      Firefox
   var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
   var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
@@ -79,7 +85,6 @@ function initiateXMLHttpRequest(resource, cb) {
 function getUserProfilePicture() {
   initiateXMLHttpRequest('photo', function(xhr) {
     var imgHolder = id('meImg');
-    console.log(xhr,'xhr');
     imgHolder.innerHTML = `<img src="${xhr.responseText}" />`;
   });
 }
@@ -102,8 +107,14 @@ function clearMe() {
   id('meName').innerHTML = '';
 }
 
-document.addEventListener('authStateChanged', function(e) {
+document.addEventListener('authStateChanged', function() {
   var sessionState = findSessionState();
-  if (sessionState == 'Authorized') displayMe();
-  else clearMe();
+  if (sessionState == 'Authorized') {
+    id('auth').value = 'Log Out';
+    displayMe();
+  }
+  else {
+    id('auth').value = 'Sign In';
+    clearMe();
+  }
 });
