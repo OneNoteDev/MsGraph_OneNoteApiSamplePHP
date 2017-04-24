@@ -38,8 +38,8 @@ After you've setup your web server described above,....
 
 1.	Clone the Git repository to a folder on your local machine.
 2.	Go to the [Microsoft app registration page](https://account.live.com/developers/applications/index).
-3.	On the API Settings page, set Mobile or desktop setting to No.
-4.	Set the Redirect URL to the address of the callback.php file on your hosted deployment. If the root deployment URL is http://onenoteapisamples.com:3000, then specify http://onenoteapisamples.com:3000/callback.php as the Redirect URL (as in the following example). This URL must exactly match the deployed redirect URL. The root domain name must be unique, so if you use one domain for testing and another for production, you'll need to register separate client ids and secrets for each domain. ![Specify API settings in the Microsoft Application Registration Portal](images/OneNoteMSAScreen.png)
+3.	It is highly recommended that you get your own client ID, secret and redirect URI. You can get your own client ID, client secret and redirect URI. [here](http://developer.microsoft.com/en-us/graph/docs/authorization/auth_register_app_v2)
+4.	For local development, the sample uses http://localhost:8888/callback.php as a redirect URI. For production, you should change this to point to your application's domain on your hosted deployment. If the root deployment URL is https://onenoteapisamples.com, then specify https://onenoteapisamples.com/callback.php as the Redirect URL (as in the following example). This URL must exactly match the deployed redirect URL. The root domain name must be unique, so if you use one domain for testing and another for production, you'll need to register separate client ids and secrets for each domain. ![Specify API settings in the Microsoft Application Registration Portal](images/OneNoteMSAScreen.png) >Note: Chrome and Firefox do not allow cookies to be set on localhost, and thus authentication will not work on these browsers during development if you choose to redirect to localhost.
 
 ### Set up the sample
 
