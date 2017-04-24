@@ -61,5 +61,10 @@ header("X-Frame-Options: SAMEORIGIN");
     </div>
   </div>
   <script src="./lib/app-config.js" type="text/javascript"></script>
+  <script>
+  window.onload = function() {
+    window.document.dispatchEvent(new Event('authStateChanged'));
+  }
+  </script>
 </body>
 </html>
