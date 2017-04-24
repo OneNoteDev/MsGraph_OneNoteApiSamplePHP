@@ -352,8 +352,8 @@ POSTDATA;
     }
 }
 
-echo '<html><head><title>OneNote Service API Result</title></head><body>';
-echo '<h1>OneNote Service API Result</h1>';
+echo '<html><head><title>MS Graph OneNote Service API Result</title></head><body>';
+echo '<h1>MS Graph OneNote Service API Result</h1>';
 
 $OneNoteRequest = new OneNoteRequest();
 

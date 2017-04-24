@@ -32,7 +32,7 @@ define('CLIENTID', '66f9234f-0041-48e7-9e98-575e3de2c745');
 define('CLIENTSECRET', 'acdXmo2TkE1hcd2aEjTvbxO');
 define('SCOPES', 'openid Notes.ReadWrite offline_access User.Read');
 
-// Make sure this is identical to the redirect_uri parameter passed in WL.init() call.
+// Make sure this is identical to the REDIRECT_URI_PATH parameter passed in WL.init() call.
 define('CALLBACK', 'http://localhost:8888/callback.php');
 
 define('OAUTHURL', 'https://login.microsoftonline.com/common/oauth2/v2.0/token');

@@ -1,16 +1,16 @@
-// TODO: Update the clientId, redirectUri, and scopes for your application
+// TODO: Update the client ID, redirect URI, and scopes for your application
 var baseRequestUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
-var clientId = '66f9234f-0041-48e7-9e98-575e3de2c745';
-var redirectUri = 'http://localhost:8888/callback.php';
-var scopes = ['openid', 'Notes.ReadWrite', 'offline_access', 'User.Read'];
+var CLIENT_ID = '66f9234f-0041-48e7-9e98-575e3de2c745';
+var REDIRECT_URI = 'http://localhost:8888/callback.php';
+var SCOPES = ['openid', 'Notes.ReadWrite', 'offline_access', 'User.Read'];
 
 function id(domId) {
   return document.getElementById(domId);
 }
 
 function buildUrl() {
-  return `${baseRequestUrl}?client_id=${clientId}&scope=
-  ${scopes.join(' ')}&response_type=code&redirect_uri=${redirectUri}&response_mode=query`;
+  return `${baseRequestUrl}?CLIENT_ID=${CLIENT_ID}&scope=
+  ${SCOPES.join(' ')}&response_type=code&redirect_uri=${REDIRECT_URI}&response_mode=query`;
 }
 
 function authHandler() {
