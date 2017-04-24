@@ -9,7 +9,7 @@ function id(domId) {
 }
 
 function buildUrl() {
-  return `${baseRequestUrl}?CLIENT_ID=${CLIENT_ID}&scope=
+  return `${baseRequestUrl}?client_id=${CLIENT_ID}&scope=
   ${SCOPES.join(' ')}&response_type=code&redirect_uri=${REDIRECT_URI}&response_mode=query`;
 }
 
