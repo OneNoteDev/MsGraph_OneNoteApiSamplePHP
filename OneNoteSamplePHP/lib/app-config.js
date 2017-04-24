@@ -1,4 +1,4 @@
-// Update the clientId, redirectUri, and scopes for your application
+// TODO: Update the clientId, redirectUri, and scopes for your application
 var baseRequestUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
 var clientId = '66f9234f-0041-48e7-9e98-575e3de2c745';
 var redirectUri = 'http://localhost:8888/callback.php';
@@ -84,6 +84,7 @@ function initiateXMLHttpRequest(resource, cb) {
 }
 
 function getUserProfilePicture() {
+  // Currently not supported for MSA accounts
   initiateXMLHttpRequest('photo', function(xhr) {
     var imgHolder = id('meImg');
     imgHolder.innerHTML = `<img src="${xhr.responseText}" />`;

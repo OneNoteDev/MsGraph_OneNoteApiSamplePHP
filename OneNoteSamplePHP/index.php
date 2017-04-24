@@ -31,12 +31,12 @@ header("X-Frame-Options: SAMEORIGIN");
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <title>OneNote Service PHP Sample</title>
+  <title>MS Graph OneNote Service PHP Sample</title>
   <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
 
 <body>
-  <h1>OneNote Service PHP Sample</h1>
+  <h1>MS Graph OneNote Service PHP Sample</h1>
 
   <div>
     <div id="meName" class="Name"></div>
