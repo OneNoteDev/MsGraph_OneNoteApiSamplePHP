@@ -44,9 +44,9 @@ After you've setup your web server described above,....
 ### Set up the sample
 
 1.	Replace the following placeholders in the callback.php and index.php files with the associated values from the App Settings page:
-	1.	Replace %CLIENT_ID% with the client ID value.
-	2.	Replace %CLIENT_SECRET% with the client secret value.
-	3.	Replace %REDIRECT_URI_PATH% with the value of the deployment root URL. The deployment root URL consists of "http://" plus the root domain URL, so if your redirect URL looks like http://onenoteapisamples.com/callback.php, the deployment root URL is "http://onenoteapisamples.com." At run time, the redirect URL value will resolve to "http://onenoteapisamples.com/callback.php."
+	1.	Replace CLIENT_ID with the client ID value.
+	2.	Replace CLIENT_SECRET with the client secret value.
+	3.	Replace REDIRECT_URI_PATH_PATH with the value of the deployment root URL. The deployment root URL consists of "http://" plus the root domain URL, so if your redirect URL looks like http://onenoteapisamples.com/callback.php, the deployment root URL is "http://onenoteapisamples.com." At run time, the redirect URL value will resolve to "http://onenoteapisamples.com/callback.php."
 2.	Put the sample files in the root directory on your web server.
 3.	Open a browser and navigate to the default .php page.
 4.	Login using your Microsoft account, and allow the app to create pages in your OneNote notebooks.
