@@ -2,7 +2,7 @@
 var baseRequestUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
 var CLIENT_ID = '66f9234f-0041-48e7-9e98-575e3de2c745';
 var REDIRECT_URI = 'http://localhost:8888/callback.php';
-var SCOPES = ['openid', 'Notes.ReadWrite', 'offline_access', 'User.Read'];
+var SCOPES = ['openid', 'Notes.ReadWrite', 'Notes.ReadWrite.All', 'offline_access', 'User.Read'];
 
 function id(domId) {
   return document.getElementById(domId);

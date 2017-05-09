@@ -28,9 +28,9 @@ define('EXPIRESIN', 'expires_in');
 define('REFRESHTOKEN', 'refresh_token');
 
 // Update the following values
-define('CLIENTID', '66f9234f-0041-48e7-9e98-575e3de2c745');
-define('CLIENTSECRET', 'acdXmo2TkE1hcd2aEjTvbxO');
-define('SCOPES', 'openid Notes.ReadWrite offline_access User.Read');
+define('CLIENTID', '<YOUR CLIENT ID HERE>');
+define('CLIENTSECRET', '<YOUR CLIENT SECRET HERE>');
+define('SCOPES', 'openid Notes.ReadWrite Notes.ReadWrite.All offline_access User.Read');
 
 // Make sure this is identical to the REDIRECT_URI_PATH parameter passed in WL.init() call.
 define('CALLBACK', 'http://localhost:8888/callback.php');

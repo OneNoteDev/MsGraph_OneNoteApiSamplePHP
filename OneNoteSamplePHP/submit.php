@@ -24,7 +24,7 @@ session_start();
 header("X-Frame-Options: SAMEORIGIN");
 
 //HTTPS endpoint to create pages with POST
-define('URL','https://graph.microsoft.com/beta/me/notes/pages');
+define('URL','https://graph.microsoft.com/v1.0/me/onenote/pages');
 
 function parseQueryString($query)
 {
