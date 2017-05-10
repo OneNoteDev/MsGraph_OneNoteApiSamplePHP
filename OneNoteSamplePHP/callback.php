@@ -28,12 +28,12 @@ define('EXPIRESIN', 'expires_in');
 define('REFRESHTOKEN', 'refresh_token');
 
 // Update the following values
-define('CLIENTID', '<YOUR CLIENT ID HERE>');
-define('CLIENTSECRET', '<YOUR CLIENT SECRET HERE>');
+define('CLIENTID', '<CLIENT_ID>');
+define('CLIENTSECRET', '<CLIENT_SECRET>');
 define('SCOPES', 'openid Notes.ReadWrite Notes.ReadWrite.All offline_access User.Read');
 
 // Make sure this is identical to the REDIRECT_URI_PATH parameter passed in WL.init() call.
-define('CALLBACK', 'http://localhost:8888/callback.php');
+define('CALLBACK', '<REDIRECT_URI_PATH>');
 
 define('OAUTHURL', 'https://login.microsoftonline.com/common/oauth2/v2.0/token');
 
