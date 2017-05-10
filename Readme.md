@@ -30,7 +30,7 @@ The PHP sample runs on a web server. The client browser needs to be able to acce
 **Accounts**
 
 -	As the developer, you'll need to [have a Microsoft account and get a client ID string](http://msdn.microsoft.com/EN-US/library/office/dn575426.aspx) so your app can authenticate with the Microsoft Azure AD v2.0 endpoint.
--	As the user of the sample, you'll need a Microsoft account so the OneNote API can send the pages to your OneDrive.
+-	As the user of the sample, you'll need a Microsoft account (Azure AD/Org ID or an MSA account) so the OneNote API can send the pages to your OneDrive.
 
 ### Register the sample
 
@@ -54,7 +54,14 @@ After you've setup your web server described above,....
 
 ### Version info
 
-This is the initial public release for this code sample.
+
+### Version info
+
+| Date         | Change                                                                         |
+|--------------|--------------------------------------------------------------------------------|
+| May 2017     | Updated to utilize the Microsoft Graph v1.0 base URL for OneNote resources     |
+| April 2017   | Updated to utilize the Microsoft Graph API endpoints.                          |
+| May 2014     | Initial public release for this code sample.                                   |
 
 ### Known issues
 
